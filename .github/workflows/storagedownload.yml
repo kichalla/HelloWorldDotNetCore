@@ -42,4 +42,4 @@ jobs:
         done
         echo
         echo Run information:
-        echo /tmp/runs.txt
+        cat /tmp/runs.txt
