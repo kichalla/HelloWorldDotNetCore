@@ -1,4 +1,4 @@
-name: StorageDownloadExperiments
+name: StorageDownloadExperiments-Premium
 
 on:
   schedule:
@@ -25,7 +25,7 @@ jobs:
             mkdir -p /tmp/oryx/platforms/python/3.8.1
             cd /tmp/oryx/platforms/python/3.8.1
             PLATFORM_BINARY_DOWNLOAD_START=$SECONDS
-            curl -D headers.txt -SL "https://oryxsdksdev.blob.core.windows.net/python/python-3.8.1.tar.gz" --output 3.8.1.tar.gz >/dev/null 2>&1
+            curl -D headers.txt -SL "https://kichallastorage.blob.core.windows.net/python/python-3.8.1.tar.gz" --output 3.8.1.tar.gz >/dev/null 2>&1
             PLATFORM_BINARY_DOWNLOAD_ELAPSED_TIME=$(($SECONDS - $PLATFORM_BINARY_DOWNLOAD_START))
             echo "Downloaded in $PLATFORM_BINARY_DOWNLOAD_ELAPSED_TIME sec(s)."
             headerName="x-ms-meta-Checksum"
