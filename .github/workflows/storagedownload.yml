@@ -1,0 +1,43 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run a one-line script
+      run: echo Hello, world!
+    - name: Run a multi-line script
+      run: |
+        for i in {1..10}
+        do
+            echo "Run #$i"
+            PLATFORM_SETUP_START=$SECONDS
+            echo
+            echo Downloading and installing python version '3.8.1'...
+            rm -rf /tmp/oryx/platforms/python/3.8.1
+            mkdir -p /tmp/oryx/platforms/python/3.8.1
+            cd /tmp/oryx/platforms/python/3.8.1
+            PLATFORM_BINARY_DOWNLOAD_START=$SECONDS
+            curl -D headers.txt -SL "https://oryxsdksdev.blob.core.windows.net/python/python-3.8.1.tar.gz" --output 3.8.1.tar.gz >/dev/null 2>&1
+            PLATFORM_BINARY_DOWNLOAD_ELAPSED_TIME=$(($SECONDS - $PLATFORM_BINARY_DOWNLOAD_START))
+            echo "Downloaded in $PLATFORM_BINARY_DOWNLOAD_ELAPSED_TIME sec(s)."
+            headerName="x-ms-meta-Checksum"
+            checksumHeader=$(cat headers.txt | grep $headerName: | tr -d '\r')
+            rm -f headers.txt
+            checksumValue=${checksumHeader#"$headerName: "}
+            echo "$checksumValue 3.8.1.tar.gz" | sha512sum -c - >/dev/null 2>&1
+            tar -xzf 3.8.1.tar.gz -C .
+            rm -f 3.8.1.tar.gz
+            PLATFORM_SETUP_ELAPSED_TIME=$(($SECONDS - $PLATFORM_SETUP_START))
+            echo "Done in $PLATFORM_SETUP_ELAPSED_TIME sec(s)."
+            echo "$PLATFORM_SETUP_ELAPSED_TIME" >> /tmp/runs.txt
+            echo
+        done
+        echo
+        echo Run information:
+        echo /tmp/runs.txt
