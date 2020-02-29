@@ -28,7 +28,7 @@ jobs:
             curl -D headers.txt -SL "https://kichallastorage-verizon.azureedge.net/python/python-3.8.1.tar.gz" --output 3.8.1.tar.gz >/dev/null 2>&1
             PLATFORM_BINARY_DOWNLOAD_ELAPSED_TIME=$(($SECONDS - $PLATFORM_BINARY_DOWNLOAD_START))
             echo "Downloaded in $PLATFORM_BINARY_DOWNLOAD_ELAPSED_TIME sec(s)."
-            headerName="x-ms-meta-Checksum"
+            headerName="x-ms-meta-checksum"
             checksumHeader=$(cat headers.txt | grep $headerName: | tr -d '\r')
             rm -f headers.txt
             checksumValue=${checksumHeader#"$headerName: "}
