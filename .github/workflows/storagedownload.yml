@@ -2,7 +2,7 @@ name: StorageDownloadExperiments-Premium
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '*/2 * * * *'
       
 jobs:
   build:
